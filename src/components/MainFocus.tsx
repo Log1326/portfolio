@@ -1,12 +1,11 @@
-import { DraggableGrid } from './DraggableGrid'
 import { useState } from 'react'
+import { DraggableGrid } from './DraggableGrid'
 
 export const MainFocus = () => {
 	const [items, setItems] = useState<string[]>([
 		'PieChartWithTech',
 		'LineChartWithBrowsers',
 		'LineChartWithDataMobileAndDesktop',
-
 		'RadarStrenght',
 		'LineChartWithDots',
 		'LineChartWithCondition'
