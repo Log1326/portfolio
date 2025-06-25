@@ -2,7 +2,7 @@ import native from '@/assets/Group 1935.svg'
 import nest from '@/assets/NestJS.svg'
 import next from '@/assets/Icons.svg'
 import react from '@/assets/Group 1938.svg'
-import { useWriting } from '@/hooks/useWritting'
+import { useWriting } from '@/hooks/useWriting'
 const TEXT_NEST: string =
 	'  Nest JS is a progressive Node.js framework for building efficient and scalable server-side applications using TypeScript'
 const TEXT_NEXT: string =
@@ -19,7 +19,7 @@ export const WorkExperience = () => {
 	const displayNest = useWriting({ speed: SPEED, text: TEXT_NEST })
 	const displayNative = useWriting({ speed: SPEED, text: TEXT_NATIVE })
 	return (
-		<div className='w-full flex flex-col items-center justify-center'>
+		<div className=' elect-none w-full flex flex-col items-center justify-center'>
 			<strong className='text-3xl text-center w-full py-4'>
 				Work Experience
 			</strong>

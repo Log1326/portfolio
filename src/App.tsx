@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Parallax, ParallaxProvider } from 'react-scroll-parallax'
 import { Drawer, DrawerContent, DrawerTrigger } from './components/ui/drawer'
 
 import Skills from '@/assets/Skills.svg'
@@ -8,7 +7,6 @@ import { FeedbackForm } from './components/Feedback'
 import { Header } from './components/Header'
 import { Introduce } from './components/Introduce'
 import { MainFocus } from './components/MainFocus'
-import { ModeToggle } from './components/mode-toggle'
 import { ThemeProvider } from './components/theme-provider'
 import { Button } from './components/ui/button'
 import { WorkExperience } from './components/WorkExperience'
@@ -18,7 +16,6 @@ import { cn } from './lib/utils'
 function App() {
 	const windowWidth = useWindowWidth()
 	const isSmallScreen = windowWidth < 600
-	const isMediumScreen = windowWidth >= 600 && windowWidth < 900
 	const [showHint, setShowHint] = useState(false)
 	const [cursorPosition, setCursorPosition] = useState({ x: '0', y: '50%' })
 	const [animationFinished, setAnimationFinished] = useState(false)
@@ -26,8 +23,8 @@ function App() {
 		const button = document.getElementById('download-button')
 		if (button) {
 			const rect = button.getBoundingClientRect()
-			const buttonCenterX = Math.round(rect.x - rect.width)
-			const buttonCenterY = Math.round(rect.y + rect.height + 20)
+			const buttonCenterX = Math.round(rect.x - rect.width - 40)
+			const buttonCenterY = Math.round(rect.y + rect.height + 10)
 			const animateCursor = () =>
 				setCursorPosition(() => ({
 					x: `${buttonCenterX}px`,
@@ -107,107 +104,14 @@ function App() {
 					<Pointer size={40} />
 				</div>
 			)}
-
-			<div className='absolute top-10 right-10 flex items-center  bg-background'>
-				<a
-					href='/Pavel_M_CV.pdf'
-					download='Pavel_M_CV.pdf'
-					id='download-button'
-				>
-					<Button variant='outline' className='text-primary'>
-						Download cv
-					</Button>
-				</a>
-
-				<ModeToggle />
-			</div>
-
-			<ParallaxProvider>
-				<div className='bg-background flex flex-col items-center gap-20 text-text min-h-screen w-full'>
-					<Parallax
-						translateY={
-							isSmallScreen ? [0, 5] : isMediumScreen ? [0, 10] : [0, 20]
-						}
-					>
-						<Header />
-						<Introduce />
-					</Parallax>
-					<Parallax
-						className={cn(
-							'flex items-center justify-center bg-background w-full mb-40 relative',
-							{
-								'mt-40': isMediumScreen
-							}
-						)}
-						translateY={isMediumScreen ? [160, 50] : [100, 40]}
-					>
-						<Button
-							onClick={() =>
-								window.open(
-									'https://66f28a8b3e2f51d89c0723be--deluxe-crostata-97c822.netlify.app/',
-									'_blank'
-								)
-							}
-							variant='link'
-							className='absolute right-32 -top-10'
-						>
-							Open game
-						</Button>
-						<iframe
-							src='https://66f28a8b3e2f51d89c0723be--deluxe-crostata-97c822.netlify.app/'
-							width={windowWidth * 0.8}
-							height='600'
-							style={{ border: 'none', borderRadius: '15px' }}
-						/>
-					</Parallax>
-					<Parallax
-						className={cn({ isSmallScreen: 'mb-40' })}
-						scale={
-							isSmallScreen ? [0, 1.1] : isMediumScreen ? [0, 1.2] : [0.9, 1.2]
-						}
-						translateY={
-							isSmallScreen ? [0, 20] : isMediumScreen ? [50, 10] : [50, 10]
-						}
-					>
-						<WorkExperience />
-					</Parallax>
-					{!isSmallScreen && (
-						<Parallax
-							translateY={
-								isSmallScreen ? [10, 30] : isMediumScreen ? [5, 30] : [0, 40]
-							}
-						>
-							<MainFocus />
-						</Parallax>
-					)}
-					<Parallax
-						className={cn('flex  justify-center bg-background w-full', {
-							'mt-80': isMediumScreen
-						})}
-						translateY={isMediumScreen ? [160, 50] : [100, 40]}
-					>
-						<img src={Skills} alt='skills' />
-					</Parallax>
-
-					<Parallax
-						startScroll={-100}
-						speed={isSmallScreen ? 5 : isMediumScreen ? 7 : 11}
-						rotate={
-							isSmallScreen ? [0, 50] : isMediumScreen ? [0, 1200] : [0, 1200]
-						}
-						translateX={
-							isSmallScreen
-								? [-500, 500]
-								: isMediumScreen
-									? [-300, 900]
-									: [-700, 1100]
-						}
-					>
+			<div className='flex bg-background flex-col gap-10 overflow-x-hidden py-4 px-2 md:px-10'>
+				<div className='flex justify-end items-center bg-background'>
+					<div className='flex items-center gap-2'>
 						<Drawer>
 							<DrawerTrigger>
 								<Button
 									type='button'
-									className='text-xl z-50'
+									className='md:text-xl text-xs z-50'
 									variant='outline'
 								>
 									Leave a feedback
@@ -217,9 +121,92 @@ function App() {
 								<FeedbackForm />
 							</DrawerContent>
 						</Drawer>
-					</Parallax>
+						<a
+							href='/Pavel_M_CV.pdf'
+							download='Pavel_M_CV.pdf'
+							id='download-button'
+						>
+							<Button variant='outline' className='text-primary'>
+								Download cv
+							</Button>
+						</a>
+					</div>
 				</div>
-			</ParallaxProvider>
+
+				<Header />
+				<Introduce />
+
+				<div className='flex w-full flex-col items-start justify-center p-6 border border-zinc-200 dark:border-zinc-800 rounded-2xl gap-4 bg-white dark:bg-zinc-900 shadow-sm'>
+					<p className='text-zinc-700 dark:text-zinc-300'>
+						An interactive typing experience with a virtual keyboard and smart
+						input. Type a 5-letter word — valid words are highlighted in{' '}
+						<span className='text-green-600 font-medium'>green</span>, , invalid
+						ones in <span className='text-red-600 font-medium'>red</span>. Great
+						for quick vocabulary checks or typing practice.
+					</p>
+					<Button
+						onClick={() =>
+							window.open(
+								'https://wondrous-daifuku-eb831f.netlify.app/',
+								'_blank'
+							)
+						}
+					>
+						🔗 Open Project
+					</Button>
+				</div>
+				<div className='flex w-full flex-col items-start justify-center p-6 border border-zinc-200 dark:border-zinc-800 rounded-2xl gap-4 bg-white dark:bg-zinc-900 shadow-sm'>
+					<h2 className='text-xl font-semibold text-zinc-900 dark:text-white'>
+						📦 QR Code Recipes — Fullstack Platform Built with Next.js
+					</h2>
+					<p className='text-zinc-700 dark:text-zinc-300'>
+						An interactive platform for creating recipes with customizable
+						parameters and generating QR codes.
+						<br />
+						Integrations: Telegram bot, Kanban board, order map, analytics,
+						calendar.
+						<br />
+						Technologies:{' '}
+						<span className='font-medium'>
+							Next.js App Router, Tailwind CSS, React Query, Socket.IO, Leaflet,
+							Telegram API, Vercel Blob
+						</span>
+						.
+					</p>
+					<button
+						onClick={() =>
+							window.open('https://qr-code-six-blush.vercel.app', '_blank')
+						}
+						className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors'
+					>
+						🔗 Open Project
+					</button>
+				</div>
+				<div className='flex flex-col items-end'>
+					<Button
+						onClick={() =>
+							window.open(
+								'https://deluxe-crostata-97c822.netlify.app/',
+								'_blank'
+							)
+						}
+						variant='link'
+						className=''
+					>
+						Open game
+					</Button>
+					<iframe
+						src='https://deluxe-crostata-97c822.netlify.app'
+						className='w-full h-[39rem] rounded-xl'
+					/>
+				</div>
+
+				<WorkExperience />
+
+				{!isSmallScreen && <MainFocus />}
+
+				<img src={Skills} alt='skills' />
+			</div>
 		</ThemeProvider>
 	)
 }
